@@ -19,7 +19,7 @@ export default function Home() {
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
-      <main>hello world</main>
+      <main className='bg-red-600'>hello world</main>
       <footer className={styles.footer}>
         <a
           href='https://instagram.com/1rutmann'
