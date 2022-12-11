@@ -1,7 +1,15 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getMemeTweets } from '../../Utils/twitter';
-import { getWebHook, storeHooks } from '../../Utils/writeRead';
+// import { getWebHook, storeHooks } from '../../Utils/writeRead';
+import type { IHooks } from '../../Utils';
+import {
+  findOneWebhook,
+  getWebhooks,
+  storeWebhook,
+  deleteWebhook
+} from '../../Utils';
+import type { webhooks } from '@prisma/client';
 
 type AsyncReturnType<T extends (...args: any) => Promise<any>> = T extends (
   ...args: any
@@ -16,11 +24,9 @@ const sendTweetToDiscord = async (
 
   // const webHookURL = process.env.DISCORD_WEBHOOK!;
 
-  const webHookURLS = await getWebHook();
+  const webHookURLS = await getWebhooks();
 
-  console.log(webHookURLS, 'weee');
-
-  webHookURLS.map((hook: { name: string; url: string }) => {
+  webHookURLS.map((hook) => {
     return fetch(hook.url, {
       method: 'post',
       headers: {
@@ -37,7 +43,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { method, body } = req;
+  const { method, body, query } = req;
 
   switch (method) {
     case 'GET':
@@ -59,20 +65,33 @@ export default async function handler(
       return res.status(200).json({ msg: 'sent' });
 
     case 'POST':
-      const hookData: { id: string; url: string; name: string } = body;
+      try {
+        const hookData: IHooks = body;
 
-      if (!hookData.url.startsWith('https://discord.com/api/webhooks/')) {
-        return res.status(400).json({ error: 'Invalid discord webhook url' });
+        if (!hookData.url.startsWith('https://discord.com/api/webhooks/')) {
+          return res.status(400).json({ error: 'Invalid discord webhook url' });
+        }
+
+        await storeWebhook(hookData);
+
+        return res.status(201).json({ msg: 'success' });
+      } catch (error) {
+        return res.status(400).json({ error: error });
       }
 
-      const existingNotes = await getWebHook();
-      hookData.id = new Date().toISOString();
+    case 'DELETE':
+      try {
+        const { remove } = query;
 
-      const updatedCron = existingNotes.concat(hookData);
+        if (typeof remove !== 'string') throw Error('invalid type');
 
-      await storeHooks(updatedCron);
+        const hookData = { url: remove };
+        await deleteWebhook(hookData);
 
-      return res.status(201).json({ msg: 'success' });
+        return res.status(201).json({ msg: 'your webhook has been deleted.' });
+      } catch (error) {
+        return res.status(400).json({ error: error });
+      }
 
     default:
       return res.status(405).json({ error: 'lol' });

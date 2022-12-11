@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { IOneHook } from '../Utils';
 
 const restAgent = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
@@ -7,7 +8,7 @@ const restAgent = axios.create({
   }
 });
 
-const getRequestConfig = () => {
+const getRequestConfig: any = () => {
   return {
     params: {},
     headers: {}
@@ -19,5 +20,16 @@ export const webhooks = {
     const config = getRequestConfig();
 
     return restAgent.post('/readwrite', data, config);
+  },
+  remove: (data: IOneHook) => {
+    const config = getRequestConfig();
+    config.params.remove = data.url;
+
+    return restAgent.delete('/readwrite', config);
+  },
+  test: (data: IOneHook) => {
+    const config = getRequestConfig();
+
+    return restAgent.post('/test', data, config);
   }
 };

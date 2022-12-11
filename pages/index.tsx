@@ -31,6 +31,21 @@ export default function Home() {
       throw new Error(error);
     }
   };
+  const handleTestWebHook = async (event: any, hook: { url: string }) => {
+    event.preventDefault();
+
+    try {
+      await webhooks.test(hook);
+    } catch (err: any) {
+      const {
+        response: {
+          data: { error }
+        }
+      } = err;
+      console.log(err);
+      throw new Error(error);
+    }
+  };
 
   const bounce = cssTransition({
     enter: 'animate__animated animate__bounceIn',
@@ -127,6 +142,40 @@ export default function Home() {
               Powered by <span className={styles.logo}>1rutmann</span>
             </a>
           </footer>
+
+          <div className='flex items-end justify-end '>
+            <p
+              onClick={(e) =>
+                toast.promise(
+                  handleTestWebHook(e, {
+                    url: webhookURL
+                  }),
+                  {
+                    pending: {
+                      render() {
+                        return 'Finding you the best meme...';
+                      }
+                    },
+                    success: {
+                      render({ data }) {
+                        return `${data}`;
+                      }
+                      // other options
+                    },
+                    error: {
+                      render({ data }) {
+                        // When the promise reject, data will contains the error
+                        return `LMAO ${data}`;
+                      }
+                    }
+                  }
+                )
+              }
+              className='rounded bg-black text-white px-4 cursor-pointer py-1 text-sm font-[500] hover:bg-gray-900 transition-all'
+            >
+              Test
+            </p>
+          </div>
         </form>
       </main>
       {/* <footer className={styles.footer}>
