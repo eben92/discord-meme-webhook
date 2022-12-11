@@ -26,6 +26,15 @@
   justify-content: center;
   align-items: center;
   flex-grow: 1;
+  font-size: 14px;
+}
+.footer a span {
+  font-size: 18px;
+  font-weight: 700;
+  border: 2px solid #111;
+  /* background: #111; */
+  border-radius: 3px;
+  /* color: white; */
 }
 
 .title a {

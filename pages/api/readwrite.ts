@@ -61,6 +61,10 @@ export default async function handler(
     case 'POST':
       const hookData: { id: string; url: string; name: string } = body;
 
+      if (!hookData.url.startsWith('https://discord.com/api/webhooks/')) {
+        return res.status(400).json({ error: 'Invalid discord webhook url' });
+      }
+
       const existingNotes = await getWebHook();
       hookData.id = new Date().toISOString();
 
