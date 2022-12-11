@@ -59,7 +59,10 @@ export default function Home() {
     <div>
       <Head>
         <title>Daily DISCORD MEME Bot</title>
-        <meta name='description' content='hello world' />
+        <meta
+          name='description'
+          content='Let me serve your MEME channel &#129313;'
+        />
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
