@@ -18,6 +18,8 @@ const sendTweetToDiscord = async (
 
   const webHookURLS = await getWebHook();
 
+  console.log(webHookURLS, 'weee');
+
   webHookURLS.map((hook: { name: string; url: string }) => {
     return fetch(hook.url, {
       method: 'post',
