@@ -21,6 +21,7 @@ export default function Home() {
 
       setServerName('');
       setWebhookURL('');
+      return 'Sent';
     } catch (err: any) {
       const {
         response: {
@@ -36,6 +37,8 @@ export default function Home() {
 
     try {
       await webhooks.test(hook);
+
+      return 'Sent';
     } catch (err: any) {
       const {
         response: {
@@ -84,7 +87,7 @@ export default function Home() {
                 error: {
                   render({ data }) {
                     // When the promise reject, data will contains the error
-                    return `${data}`;
+                    return `LMAO ${data}`;
                   }
                 }
               }

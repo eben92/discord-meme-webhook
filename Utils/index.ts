@@ -22,6 +22,15 @@ export const storeWebhook = async (formData: IHooks) => {
     throw Error('Add webhook url');
   }
 
+  const exists = await findOneWebhook(formData);
+  console.log(exists);
+
+  if (exists) {
+    throw new Error('webhook url already exists');
+  }
+
+  console.log(exists, 'here');
+
   const storedWebhooks = await prisma.webhooks.create({
     data: formData
   });

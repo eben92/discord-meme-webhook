@@ -75,8 +75,8 @@ export default async function handler(
         await storeWebhook(hookData);
 
         return res.status(201).json({ msg: 'success' });
-      } catch (error) {
-        return res.status(400).json({ error: error });
+      } catch (error: any) {
+        return res.status(400).json({ error: error.message });
       }
 
     case 'DELETE':
@@ -89,8 +89,8 @@ export default async function handler(
         await deleteWebhook(hookData);
 
         return res.status(201).json({ msg: 'your webhook has been deleted.' });
-      } catch (error) {
-        return res.status(400).json({ error: error });
+      } catch (error: any) {
+        return res.status(400).json({ error: error.message });
       }
 
     default:

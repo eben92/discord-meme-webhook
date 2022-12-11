@@ -59,15 +59,18 @@ export default async function handler(
               new Date(tweet?.created_at ?? 0) > new Date(Date.now() - 86400000)
           ) ?? [];
 
-        const discordWebhookCalls = [tweetOver1K[1]]?.map((tweet) => {
+        var randomTweet =
+          tweetOver1K[Math.floor(Math.random() * tweetOver1K.length)];
+
+        const discordWebhookCalls = [randomTweet]?.map((tweet) => {
           return sendTweetToDiscord(tweet, body);
         });
 
         Promise.allSettled(discordWebhookCalls);
 
         return res.status(200).json({ msg: 'sent' });
-      } catch (error) {
-        return res.status(400).json({ error });
+      } catch (error: any) {
+        return res.status(400).json({ error: error.message });
       }
 
     default:
