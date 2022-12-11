@@ -1,9 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getMemeTweets } from '../../Utils/twitter';
-// import webhookURLS from '../../webhooks/data.json'
 import { getWebHook, storeHooks } from '../../Utils/writeRead';
-// import NextCors from 'nextjs-cors';
 
 type AsyncReturnType<T extends (...args: any) => Promise<any>> = T extends (
   ...args: any
