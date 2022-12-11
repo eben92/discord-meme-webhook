@@ -5,7 +5,6 @@ import { useState } from 'react';
 import { toast, ToastContainer, cssTransition } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'animate.css/animate.min.css';
-import { AxiosError } from 'axios';
 
 export default function Home() {
   const [serverName, setServerName] = useState('');
