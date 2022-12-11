@@ -9,8 +9,8 @@ const file =
 
 export async function getWebHook() {
   console.log('hitting');
-  const files = await readdir('/tmp');
-  for (const file1 of files) console.log(file1, 'filess');
+  // const files = await readdir('/tmp');
+  // for (const file1 of files) console.log(file1, 'filess');
 
   const rawFileContent = fs.readFileSync(file, { encoding: 'utf-8' });
   const data = JSON.parse(rawFileContent);
