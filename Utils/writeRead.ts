@@ -16,7 +16,7 @@ export async function getWebHook() {
 
   // const hookURLS = data.webhooks ?? [];
   // return hookURLS;
-  return [];
+  return [] as any;
 }
 
 export function storeHooks(webhooks: any) {
