@@ -1,0 +1,12 @@
+name: discord-meme-cron
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+jobs:
+  cron:
+    runs-on: ubuntu-latest
+    steps:
+      - name: fire job
+        run: |
+          curl --request GET \
+          --url 'https://sia-meme.vercel.app/api/readwrite' \
