@@ -37,22 +37,40 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const tweets = await getMemeTweets();
+  const { method, body } = req;
 
-  const tweetOver1K =
-    tweets?.data?.filter(
-      (tweet) =>
-        (tweet.public_metrics?.like_count ?? 0) > 500 &&
-        new Date(tweet?.created_at ?? 0) > new Date(Date.now() - 86400000)
-    ) ?? [];
+  switch (method) {
+    case 'GET':
+      const tweets = await getMemeTweets();
 
-  const twettt = [tweetOver1K[1]];
+      const tweetOver1K =
+        tweets?.data?.filter(
+          (tweet) =>
+            (tweet.public_metrics?.like_count ?? 0) > 500 &&
+            new Date(tweet?.created_at ?? 0) > new Date(Date.now() - 86400000)
+        ) ?? [];
 
-  const discordWebhookCalls = [tweetOver1K[1]]?.map((tweet) => {
-    return sendTweetToDiscord(tweet);
-  });
+      const discordWebhookCalls = [tweetOver1K[1]]?.map((tweet) => {
+        return sendTweetToDiscord(tweet);
+      });
 
-  Promise.allSettled(discordWebhookCalls);
+      Promise.allSettled(discordWebhookCalls);
 
-  return res.status(200).json(tweetOver1K);
+      return res.status(200).json({ msg: 'sent' });
+
+    case 'POST':
+      const hookData: { id: string; url: string; name: string } = body;
+
+      const existingNotes = await getWebHook();
+      hookData.id = new Date().toISOString();
+
+      const updatedCron = existingNotes.concat(hookData);
+
+      await storeHooks(updatedCron);
+
+      return res.status(201).json({ msg: 'success' });
+
+    default:
+      return res.status(405).json({ error: 'lol' });
+  }
 }
