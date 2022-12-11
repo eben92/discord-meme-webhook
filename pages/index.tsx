@@ -95,6 +95,26 @@ export default function Home() {
           }
           className='md:w-[30%] w-full bg-white shadow-2xl rounded-lg px-6 py-4 flex flex-col gap-4 '
         >
+          <div className={styles.footer}>
+            <a
+              href='https://instagram.com/1rutmann'
+              target='_blank'
+              rel='noopener noreferrer'
+              style={{
+                fontSize: '28px!important'
+              }}
+            >
+              <span
+                className={styles.logo}
+                style={{
+                  fontSize: '28px!important'
+                }}
+              >
+                1rutmann
+              </span>
+            </a>
+          </div>
+
           <div>
             <label
               htmlFor='server-name'
