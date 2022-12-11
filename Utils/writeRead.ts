@@ -5,7 +5,7 @@ import path from 'path';
 const file =
   process.env.NODE_ENV !== 'production'
     ? path.join(process.cwd(), '/webhooks/data.json')
-    : path.join('/temp', 'hook.json');
+    : path.join('/tmp', 'hook.json');
 
 export async function getWebHook() {
   // const files = await readdir(path.join('/temp', 'hook.json'));
