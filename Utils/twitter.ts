@@ -8,7 +8,5 @@ export async function getMemeTweets() {
     'tweet.fields': ['public_metrics', 'created_at']
   });
 
-  console.log('response', JSON.stringify(response));
-
   return response;
 }

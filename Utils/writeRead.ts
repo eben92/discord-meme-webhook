@@ -8,11 +8,13 @@ const file =
     : path.join('/tmp', 'hook.json');
 
 export async function getWebHook() {
-  const files = await readdir(path.join('/tmp', 'hook.json'));
+  const files = await readdir('/tmp');
   for (const file1 of files) console.log(file1, 'filess');
 
   const rawFileContent = fs.readFileSync(file, { encoding: 'utf-8' });
   const data = JSON.parse(rawFileContent);
+
+  console.log(data, 'ddd');
 
   const hookURLS = data.webhooks ?? [];
   return hookURLS;
