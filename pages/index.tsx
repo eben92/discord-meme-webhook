@@ -21,7 +21,7 @@ export default function Home() {
 
       setServerName('');
       setWebhookURL('');
-      return 'Sent';
+      return 'Successful';
     } catch (err: any) {
       const {
         response: {
