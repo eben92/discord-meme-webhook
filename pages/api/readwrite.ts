@@ -26,7 +26,8 @@ const sendTweetToDiscord = async (
 
   const webHookURLS = await getWebhooks();
 
-  webHookURLS.map((hook) => {
+  const send = webHookURLS.map((hook) => {
+    console.log('done');
     return fetch(hook.url, {
       method: 'post',
       headers: {
@@ -37,6 +38,8 @@ const sendTweetToDiscord = async (
       })
     });
   });
+
+  Promise.allSettled(send);
 };
 
 export default async function handler(
