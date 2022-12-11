@@ -75,7 +75,7 @@ export default function Home() {
               {
                 pending: {
                   render() {
-                    return "I'm loading";
+                    return 'Setting up your bot...';
                   }
                 },
                 success: {
