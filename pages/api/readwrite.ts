@@ -39,7 +39,7 @@ const sendTweetToDiscord = async (
     });
   });
 
-  Promise.allSettled(send);
+  await Promise.allSettled(send);
 };
 
 export default async function handler(
@@ -65,7 +65,7 @@ export default async function handler(
         return sendTweetToDiscord(tweet);
       });
 
-      Promise.allSettled(discordWebhookCalls);
+      await Promise.allSettled(discordWebhookCalls);
 
       return res.status(200).json({ msg: 'sent' });
 
