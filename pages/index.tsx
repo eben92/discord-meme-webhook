@@ -1,10 +1,11 @@
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import { webhooks } from '../services';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast, ToastContainer, cssTransition } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'animate.css/animate.min.css';
+import { DISCORD } from '../Utils/discord';
 
 export default function Home() {
   const [serverName, setServerName] = useState('');
@@ -54,6 +55,10 @@ export default function Home() {
     enter: 'animate__animated animate__bounceIn',
     exit: 'animate__animated animate__bounceOut'
   });
+
+  // useEffect(() => {
+  //   DISCORD();
+  // }, []);
 
   return (
     <div>
